@@ -31,6 +31,7 @@
         <property name="password" value="" />
     </bean>
     <jpa:repositories base-package="com.github.duychuongvn.user.dao.repository"></jpa:repositories>
+    <jpa:auditing></jpa:auditing>
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>

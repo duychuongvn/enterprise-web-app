@@ -118,5 +118,6 @@
 		<module>configuration</module>
 		<module>core</module>
 		<module>user</module>
+		<module>security</module>
 	</modules>
 </project>
