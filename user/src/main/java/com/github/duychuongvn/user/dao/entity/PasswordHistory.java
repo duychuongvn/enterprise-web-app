@@ -33,7 +33,7 @@ public class PasswordHistory extends AbstractAuditableEntity {
     @Column(name = "user_id")
     private String userId;
     @OneToOne()
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn( insertable = false, updatable = false)
     private User user;
 
     private Integer size = 5;
@@ -48,6 +48,18 @@ public class PasswordHistory extends AbstractAuditableEntity {
     @Temporal(TemporalType.DATE)
     @Column(name = "last_password_changed")
     private Date lastPasswordChanged;
+
+    @Override
+    public String toString() {
+        return "PasswordHistory{" +
+                "userId='" + userId + '\'' +
+                ", size=" + size +
+                ", failedLoginAttempts=" + failedLoginAttempts +
+                ", lastPasswordFailed=" + lastPasswordFailed +
+                ", lastPasswordChanged=" + lastPasswordChanged +
+                ", oldPasswords=" + oldPasswords +
+                '}';
+    }
 
     public void increaseFailedLoginAttempts() {
         this.failedLoginAttempts++;

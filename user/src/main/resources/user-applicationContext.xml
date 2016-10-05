@@ -13,7 +13,7 @@
         <property name="packagesToScan" value="com.github.duychuongvn.user.dao"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="generateDdl" value="true"></property>
+<!--                 <property name="generateDdl" value="false"></property> -->
                 <property name="showSql" value="true"></property>
             </bean>
         </property>
@@ -26,11 +26,13 @@
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="${url}" />
-        <property name="username" value="${username}" />
-        <property name="password" value="${password}" />
+        <property name="url" value="jdbc:mysql://192.168.0.15:3306/enterprise_web" />
+        <property name="username" value="root" />
+        <property name="password" value="" />
     </bean>
     <jpa:repositories base-package="com.github.duychuongvn.user.dao.repository"></jpa:repositories>
-
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
 
 </beans>

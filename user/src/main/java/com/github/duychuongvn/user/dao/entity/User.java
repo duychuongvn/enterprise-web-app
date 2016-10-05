@@ -3,13 +3,7 @@ package com.github.duychuongvn.user.dao.entity;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
 
@@ -28,7 +22,7 @@ public class User extends AbstractAuditableEntity {
     @Id
     private String id = UUID.randomUUID().toString();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private PasswordHistory passwordHistory ;
     @Column(name = "username")
     private String username;
@@ -65,6 +59,39 @@ public class User extends AbstractAuditableEntity {
     private boolean enabled;
     private boolean credentialsNonExpired;
     private boolean accountNonExpired;
+
+
+    public User() {
+        passwordHistory = new PasswordHistory();
+        passwordHistory.setUserId(this.id);
+    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", passwordHistory=" + passwordHistory +
+                ", username='" + username + '\'' +
+                ", password='xxxxx'"+
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dayOfBirth=" + dayOfBirth +
+                ", gender=" + gender +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", phoneNumber2='" + phoneNumber2 + '\'' +
+                ", phoneNumber3='" + phoneNumber3 + '\'' +
+                ", email='" + email + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", phoneCode='" + phoneCode + '\'' +
+                ", accountNonLocked=" + accountNonLocked +
+                ", enabled=" + enabled +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", accountNonExpired=" + accountNonExpired +
+                '}';
+    }
+
     public String getId() {
         return id;
     }
