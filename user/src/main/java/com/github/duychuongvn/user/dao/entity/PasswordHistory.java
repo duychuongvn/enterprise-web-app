@@ -22,7 +22,6 @@ import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
 
 /**
  * Created by huynhduychuong on Oct 2, 2016.
- *
  */
 @Entity
 @Table(name = "password_history")
@@ -33,19 +32,19 @@ public class PasswordHistory extends AbstractAuditableEntity {
     @Column(name = "user_id")
     private String userId;
     @OneToOne()
-    @JoinColumn( insertable = false, updatable = false)
+    @JoinColumn(insertable = false, updatable = false)
     private User user;
 
     private Integer size = 5;
     @Column(name = "failed_login_attempts")
     private Integer failedLoginAttempts = 0;
     @Column(name = "last_password_failed")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastPasswordFailed;
     @Column(name = "old_passwords")
     @Type(type = "serializedList")
     private List<String> oldPasswords = new ArrayList<>();
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_password_changed")
     private Date lastPasswordChanged;
 
@@ -63,7 +62,6 @@ public class PasswordHistory extends AbstractAuditableEntity {
 
     public void increaseFailedLoginAttempts() {
         this.failedLoginAttempts++;
-        this.lastPasswordChanged = Calendar.getInstance().getTime();
     }
 
     public void resetFailedLoginAttempts() {

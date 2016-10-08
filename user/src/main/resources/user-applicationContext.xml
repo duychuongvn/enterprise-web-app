@@ -2,11 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/data/jpa
-    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
+    <context:annotation-config/>
+    <context:component-scan base-package="com.github.duychuongvn"/>
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -26,14 +30,15 @@
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://192.168.0.15:3306/enterprise_web" />
+        <property name="url" value="jdbc:mysql://192.168.1.8:3306/enterprise_web" />
         <property name="username" value="root" />
         <property name="password" value="" />
     </bean>
-    <jpa:repositories base-package="com.github.duychuongvn.user.dao.repository"></jpa:repositories>
-    <jpa:auditing></jpa:auditing>
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
+    <jpa:repositories base-package="com.github.duychuongvn.user.dao.repository" ></jpa:repositories>
+    <!--<jpa:auditing  auditor-aware-ref="auditingAware"></jpa:auditing>-->
 
+    <bean id="auditingAware" class="com.github.duychuongvn.user.dao.AuditingAwareImpl"></bean>
 </beans>
