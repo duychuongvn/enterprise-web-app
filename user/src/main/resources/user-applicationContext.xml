@@ -39,6 +39,4 @@
     </bean>
     <jpa:repositories base-package="com.github.duychuongvn.user.dao.repository" ></jpa:repositories>
     <!--<jpa:auditing  auditor-aware-ref="auditingAware"></jpa:auditing>-->
-
-    <bean id="auditingAware" class="com.github.duychuongvn.user.dao.AuditingAwareImpl"></bean>
 </beans>
