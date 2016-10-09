@@ -3,15 +3,13 @@ package com.github.duychuongvn.core.jpa.auditing;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * Created by huynhduychuong on Oct 2, 2016.
@@ -19,11 +17,14 @@ import org.springframework.data.annotation.LastModifiedDate;
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class AbstractAuditableEntity implements Serializable {
     @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @LastModifiedDate
     @Column(name = "last_updated")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdated;
 
     @CreatedBy
