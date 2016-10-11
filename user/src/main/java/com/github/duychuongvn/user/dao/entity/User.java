@@ -12,18 +12,19 @@ import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
  */
 
 @Entity
-public class User extends AbstractAuditableEntity {
+public class User extends AbstractAuditableEntity<String> {
 
     private static final long serialVersionUID = 1L;
 
     public enum Gender {
         OTHER, MALE, FEMALE
     }
-
-    @Id
-    private String id = UUID.randomUUID().toString();
+//
+//    @Id
+//    private String id = UUID.randomUUID().toString();
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id")
     private PasswordHistory passwordHistory;
     @Column(name = "username")
     private String username;
@@ -55,6 +56,7 @@ public class User extends AbstractAuditableEntity {
     private String countryCode;
     @Column(name = "phone_code")
     private String phoneCode;
+    private String languageCode;
 
     private boolean accountNonLocked = true;
     private boolean enabled = false;
@@ -63,14 +65,15 @@ public class User extends AbstractAuditableEntity {
 
 
     public User() {
+        this.setId(UUID.randomUUID().toString());
         passwordHistory = new PasswordHistory();
-        passwordHistory.setUserId(this.id);
+        passwordHistory.setId(this.getId());
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
+                "id='" + getId() + '\'' +
                 ", passwordHistory=" + passwordHistory +
                 ", username='" + username + '\'' +
                 ", password='xxxxx'" +
@@ -91,16 +94,10 @@ public class User extends AbstractAuditableEntity {
                 ", enabled=" + enabled +
                 ", credentialsNonExpired=" + credentialsNonExpired +
                 ", accountNonExpired=" + accountNonExpired +
+                ", auditing=" +super.toString()+
                 '}';
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public PasswordHistory getPasswordHistory() {
         return passwordHistory;
@@ -228,6 +225,14 @@ public class User extends AbstractAuditableEntity {
 
     public void setPhoneCode(String phoneCode) {
         this.phoneCode = phoneCode;
+    }
+
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
     }
 
     public boolean isAccountNonLocked() {

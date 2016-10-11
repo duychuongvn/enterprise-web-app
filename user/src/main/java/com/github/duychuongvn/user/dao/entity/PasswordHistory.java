@@ -26,13 +26,9 @@ import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
 @Entity
 @Table(name = "password_history")
 @TypeDef(typeClass = Blob2List.class, name = "serializedList")
-public class PasswordHistory extends AbstractAuditableEntity {
-
-    @Id
-    @Column(name = "user_id")
-    private String userId;
+public class PasswordHistory extends AbstractAuditableEntity<String> {
     @OneToOne()
-    @JoinColumn(insertable = false, updatable = false)
+    @JoinColumn( name = "id",insertable = false, updatable = false)
     private User user;
 
     private Integer size = 5;
@@ -51,7 +47,7 @@ public class PasswordHistory extends AbstractAuditableEntity {
     @Override
     public String toString() {
         return "PasswordHistory{" +
-                "userId='" + userId + '\'' +
+                "userId='" + getId() + '\'' +
                 ", size=" + size +
                 ", failedLoginAttempts=" + failedLoginAttempts +
                 ", lastPasswordFailed=" + lastPasswordFailed +
@@ -75,13 +71,6 @@ public class PasswordHistory extends AbstractAuditableEntity {
         }
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public User getUser() {
         return user;

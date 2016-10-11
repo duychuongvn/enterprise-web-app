@@ -14,12 +14,12 @@ public class App {
         ApplicationContext context = new ClassPathXmlApplicationContext("user-applicationContext.xml");
         UserManager userManager = context.getBean(UserManager.class);
         User user = new User();
-        user.setEmail("sasa10@gmail.com");
-        user.setPhoneNumber("a1");
-        user.setUsername("ss1");
+        user.setEmail("1111@gmail.com");
+        user.setPhoneNumber("a111111");
+        user.setUsername("ss111111s");
         user.setPassword("101");
         User user2 = userManager.createUser(user);
-        User user3 = userManager.changePassword(user2.getId(), "111");
+        User user3 = userManager.findUserById(user2.getId());
         System.out.println(user3);
     }
 }

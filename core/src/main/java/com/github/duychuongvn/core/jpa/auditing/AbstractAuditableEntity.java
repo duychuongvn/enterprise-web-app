@@ -18,7 +18,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuppressWarnings("serial")
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AbstractAuditableEntity implements Serializable {
+public class AbstractAuditableEntity <PK extends Serializable> implements Serializable {
+
+    @Id
+    private PK id;
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -37,6 +40,28 @@ public class AbstractAuditableEntity implements Serializable {
     @Version
     private Integer versionNo;
     private boolean deleted;
+
+    @Override
+    public String toString() {
+        return "AbstractAuditableEntity{" +
+                "id=" + id +
+                ", created=" + created +
+                ", lastUpdated=" + lastUpdated +
+                ", createBy='" + createBy + '\'' +
+                ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
+                ", versionNo=" + versionNo +
+                ", deleted=" + deleted +
+                '}';
+    }
+
+    public PK getId() {
+        return id;
+    }
+
+    public void setId(PK id) {
+        this.id = id;
+    }
+
     public Date getCreated() {
         return created;
     }

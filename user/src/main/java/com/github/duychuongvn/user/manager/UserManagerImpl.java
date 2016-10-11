@@ -9,12 +9,14 @@ import org.apache.commons.lang.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by huynhduychuong on 10/8/2016.
@@ -23,7 +25,6 @@ import java.util.Calendar;
 public class UserManagerImpl implements UserManager {
     @Autowired
     private UserRepository userRepository;
-
     @Override
     public User findUserByUsername(String username) throws UserNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -35,7 +36,8 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User findUserById(String userId) throws UserNotFoundException {
-        User user = userRepository.findOne(userId);
+        User user = userRepository.findByIdAndDeletedIsFalse(userId);
+        List<User> users = userRepository.findAllNotDeleted();
         if (user == null) {
             throw new UserNotFoundException("Cannot find user by id: " + userId);
         }

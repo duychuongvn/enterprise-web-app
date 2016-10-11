@@ -119,5 +119,6 @@
 		<module>core</module>
 		<module>user</module>
 		<module>security</module>
+		<module>logging</module>
 	</modules>
 </project>
