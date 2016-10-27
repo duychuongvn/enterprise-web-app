@@ -12,19 +12,18 @@ import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
  */
 
 @Entity
+@Table(name = "user")
 public class User extends AbstractAuditableEntity<String> {
 
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 5600408164912924646L;
 
     public enum Gender {
         OTHER, MALE, FEMALE
     }
-//
-//    @Id
-//    private String id = UUID.randomUUID().toString();
+
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id")
     private PasswordHistory passwordHistory;
     @Column(name = "username")
     private String username;
@@ -58,9 +57,12 @@ public class User extends AbstractAuditableEntity<String> {
     private String phoneCode;
     private String languageCode;
 
+    @Column(name = "account_non_locked")
     private boolean accountNonLocked = true;
     private boolean enabled = false;
+    @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired = true;
+    @Column(name = "account_non_expired")
     private boolean accountNonExpired = true;
 
 
@@ -76,7 +78,7 @@ public class User extends AbstractAuditableEntity<String> {
                 "id='" + getId() + '\'' +
                 ", passwordHistory=" + passwordHistory +
                 ", username='" + username + '\'' +
-                ", password='xxxxx'" +
+                ", password='******'" +
                 ", firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -94,7 +96,7 @@ public class User extends AbstractAuditableEntity<String> {
                 ", enabled=" + enabled +
                 ", credentialsNonExpired=" + credentialsNonExpired +
                 ", accountNonExpired=" + accountNonExpired +
-                ", auditing=" +super.toString()+
+                ", auditing=" + super.toString() +
                 '}';
     }
 

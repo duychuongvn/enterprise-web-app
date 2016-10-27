@@ -11,32 +11,7 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="com.github.duychuongvn"/>
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.github.duychuongvn.user.dao"/>
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-<!--                 <property name="generateDdl" value="false"></property> -->
-                <property name="showSql" value="true"></property>
-            </bean>
-        </property>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-            </props>
-        </property>
-    </bean>
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://192.168.0.15:3306/enterprise_web" />
-        <property name="username" value="root" />
-        <property name="password" value="" />
-    </bean>
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+
     <jpa:repositories base-package="com.github.duychuongvn.user.dao.repository" ></jpa:repositories>
     <jpa:auditing ></jpa:auditing>
 

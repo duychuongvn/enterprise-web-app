@@ -27,6 +27,9 @@ import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
 @Table(name = "password_history")
 @TypeDef(typeClass = Blob2List.class, name = "serializedList")
 public class PasswordHistory extends AbstractAuditableEntity<String> {
+
+
+    private static final long serialVersionUID = 5690492304821834950L;
     @OneToOne()
     @JoinColumn( name = "id",insertable = false, updatable = false)
     private User user;
