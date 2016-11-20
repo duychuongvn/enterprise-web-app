@@ -35,20 +35,20 @@
         <artifactId>liquibase-maven-plugin</artifactId>
         <version>3.5.0</version>
         <executions>
-          <execution>
-            <id>liquibase-db</id>
-            <configuration>
-              <propertyFile>${project.basedir}/target/classes/liquibase/liquibase.properties
-              </propertyFile>
-              <changeLogFile>${project.basedir}/target/classes/liquibase/db.changelog-dbmaster.xml
-              </changeLogFile>
-              <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-            </configuration>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>update</goal>
-            </goals>
-          </execution>
+          <!--<execution>-->
+            <!--<id>liquibase-db</id>-->
+            <!--<configuration>-->
+              <!--<propertyFile>${project.basedir}/target/classes/liquibase/liquibase.properties-->
+              <!--</propertyFile>-->
+              <!--<changeLogFile>${project.basedir}/target/classes/liquibase/db.changelog-dbmaster.xml-->
+              <!--</changeLogFile>-->
+              <!--<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>-->
+            <!--</configuration>-->
+            <!--<phase>process-resources</phase>-->
+            <!--<goals>-->
+              <!--<goal>update</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
         </executions>
       </plugin>
     </plugins>
@@ -72,14 +72,6 @@
               <include>**/*.properties</include>
               <include>**/*.xml</include>
             </includes>
-          </resource>
-          <resource>
-            <directory>src/main/resources</directory>
-            <filtering>false</filtering>
-            <excludes>
-              <exclude>**/*.properties</exclude>
-              <exclude>**/*.xml</exclude>
-            </excludes>
           </resource>
         </resources>
       </build>

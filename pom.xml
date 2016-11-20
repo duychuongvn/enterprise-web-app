@@ -13,11 +13,12 @@
 	<properties>
 
 		<!-- Generic properties -->
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 	</properties>
+
 
 	<dependencies>
 		<!-- Spring and Transactions -->
@@ -131,11 +132,12 @@
 	</build>
 
 	<modules>
-		<module>web-client</module>
+
 		<module>configuration</module>
 		<module>core</module>
 		<module>user</module>
 		<module>security</module>
 		<module>logging</module>
+		<module>web-client</module>
 	</modules>
 </project>

@@ -13,6 +13,46 @@
     <context:component-scan base-package="com.github.duychuongvn"/>
 
     <jpa:repositories base-package="com.github.duychuongvn.user.dao.repository" ></jpa:repositories>
-    <jpa:auditing ></jpa:auditing>
 
+
+
+
+
+
+    <jpa:auditing auditor-aware-ref="defaultAuditorAware"></jpa:auditing>
+
+    <bean id="defaultAuditorAware" class="com.github.duychuongvn.user.AuditorAwareImpl">
+    </bean>
+
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.github.duychuongvn.user.dao"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <!--                 <property name="generateDdl" value="false"></property> -->
+                <property name="showSql" value="true"></property>
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- temporary add datasource for test -->
+    <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/enterprise_web_db"/>-->
+    <bean id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://192.168.1.13:3306/enterprise_web"/>
+    <property name="username" value="root"/>
+    <property name="password" value="root"/>
+    </bean>
+    <!-- -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <bean id="accountManager" class="com.github.duychuongvn.user.manager.AccountManagerImpl"></bean>
 </beans>

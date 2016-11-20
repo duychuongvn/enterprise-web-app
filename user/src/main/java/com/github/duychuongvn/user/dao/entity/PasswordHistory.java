@@ -1,24 +1,14 @@
 package com.github.duychuongvn.user.dao.entity;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import com.github.duychuongvn.core.dao.usertype.Blob2List;
+import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import com.github.duychuongvn.core.dao.usertype.Blob2List;
-import com.github.duychuongvn.core.jpa.auditing.AbstractAuditableEntity;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by huynhduychuong on Oct 2, 2016.
@@ -31,8 +21,8 @@ public class PasswordHistory extends AbstractAuditableEntity<String> {
 
     private static final long serialVersionUID = 5690492304821834950L;
     @OneToOne()
-    @JoinColumn( name = "id",insertable = false, updatable = false)
-    private User user;
+    @JoinColumn(name = "id", insertable = false, updatable = false)
+    private Account account;
 
     private Integer size = 5;
     @Column(name = "failed_login_attempts")
@@ -46,6 +36,15 @@ public class PasswordHistory extends AbstractAuditableEntity<String> {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_password_changed")
     private Date lastPasswordChanged;
+
+    public PasswordHistory(String userId) {
+        super();
+        this.setId(userId);
+    }
+
+    public PasswordHistory() {
+
+    }
 
     @Override
     public String toString() {
@@ -75,12 +74,12 @@ public class PasswordHistory extends AbstractAuditableEntity<String> {
     }
 
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Integer getSize() {
