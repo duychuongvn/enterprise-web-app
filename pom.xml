@@ -19,7 +19,15 @@
 
 	</properties>
 
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.tiles</groupId>
+				<artifactId>tiles-request-api</artifactId>
+				<version>1.0.6</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<!-- Spring and Transactions -->
 		<dependency>
