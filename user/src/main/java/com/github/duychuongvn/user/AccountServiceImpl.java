@@ -20,6 +20,8 @@ public class AccountServiceImpl implements AccountService {
         account.setEmail(accountDto.getEmail());
         account.setUsername(account.getUsername());
         account.setPhoneNumber(account.getPhoneNumber());
+        account.setPassword(accountDto.getPassword());
+        account.getPasswordHistory().addPassword(account.getPassword());
         account.setEnabled(false);
         return accountManager.create(account);
     }

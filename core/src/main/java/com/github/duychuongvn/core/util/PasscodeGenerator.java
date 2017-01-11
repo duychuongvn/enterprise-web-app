@@ -8,12 +8,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -23,19 +20,27 @@ import java.util.TimeZone;
 public class PasscodeGenerator {
     private static final int MAX_PASSCODE_LENGTH = 9;
 
-    /** Default time interval */
+    /**
+     * Default time interval
+     */
     public static final int INTERVAL = OtpProvider.DEFAULT_INTERVAL;
 
-    /** Default decimal passcode length */
+    /**
+     * Default decimal passcode length
+     */
     private static final int PASS_CODE_LENGTH = 6;
 
-    /** The number of previous and future intervals to check */
+    /**
+     * The number of previous and future intervals to check
+     */
     private static final int ADJACENT_INTERVALS = 1;
 
-    /** Powers of 10 used to shorten the pin to the desired number of digits */
+    /**
+     * Powers of 10 used to shorten the pin to the desired number of digits
+     */
     private static final int[] DIGITS_POWER
             // 0 1  2   3    4     5      6       7        8         9
-            = {1,10,100,1000,10000,100000,1000000,10000000,100000000,1000000000};
+            = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
 
     private final Signer signer;
     private final int codeLength;
@@ -65,20 +70,22 @@ public class PasscodeGenerator {
     }
 
     /**
-     * @param mac A {@link Mac} used to generate passcodes
+     * @param mac            A {@link Mac} used to generate passcodes
      * @param passCodeLength The length of the decimal passcode
      */
     public PasscodeGenerator(final Mac mac, int passCodeLength) {
         this(new Signer() {
             @Override
-            public byte[] sign(byte[] data){
+            public byte[] sign(byte[] data) {
                 return mac.doFinal(data);
             }
         }, passCodeLength);
     }
+
     private static byte[] decodeKey(String secret) throws Base32String.DecodingException {
         return Base32String.decode(secret);
     }
+
     public static void main(String[] args) throws GeneralSecurityException, ParseException, InterruptedException, Base32String.DecodingException {
         byte[] keyBytes = decodeKey("XZYQCRKEWYV4B7HH435XJ2U7NMTGTRPO");
         final Mac mac = Mac.getInstance("HMACSHA1");
@@ -101,14 +108,15 @@ public class PasscodeGenerator {
 
 //            System.out.println(datetime);
             Date dateMinute = df.parse(datetime);
-            long T = dateMinute.getTime()/30000 ;
+            long T = dateMinute.getTime() / 30000;
             System.out.println("State: " + T);
 //            System.out.println("State/30000: " + (T/30000-2) );
             PasscodeGenerator passcodeGenerator = new PasscodeGenerator(signer, 6);
             System.out.println(passcodeGenerator.generateResponseCode(T));
             Thread.sleep(1000);
-        }while (true);
+        } while (true);
     }
+
     public PasscodeGenerator(Signer signer, int passCodeLength) {
         if ((passCodeLength < 0) || (passCodeLength > MAX_PASSCODE_LENGTH)) {
             throw new IllegalArgumentException(
@@ -134,14 +142,13 @@ public class PasscodeGenerator {
      */
     public String generateResponseCode(long state)
             throws GeneralSecurityException {
-        System.out.println("State: " + state);
         byte[] value = ByteBuffer.allocate(8).putLong(state).array();
         return generateResponseCode(value);
     }
 
 
     /**
-     * @param state 8-byte integer value representing internal OTP state.
+     * @param state     8-byte integer value representing internal OTP state.
      * @param challenge Optional challenge as array of bytes.
      * @return A decimal response code
      * @throws GeneralSecurityException If a JCE exception occur
@@ -168,7 +175,6 @@ public class PasscodeGenerator {
     public String generateResponseCode(byte[] challenge)
             throws GeneralSecurityException {
         byte[] hash = signer.sign(challenge);
-        System.out.println("========== HASH: " + HexEncoding.encode(hash));
         // Dynamically truncate the hash
         // OffsetBits are the low order bits of the last byte of the hash
         int offset = hash[hash.length - 1] & 0xF;
@@ -181,6 +187,7 @@ public class PasscodeGenerator {
     /**
      * Grabs a positive integer value from the input array starting at
      * the given offset.
+     *
      * @param bytes the array of bytes
      * @param start the index into the array to start grabbing bytes
      * @return the integer constructed from the four bytes in the array
@@ -199,7 +206,7 @@ public class PasscodeGenerator {
 
     /**
      * @param challenge A challenge to check a response against
-     * @param response A response to verify
+     * @param response  A response to verify
      * @return True if the response is valid
      */
     public boolean verifyResponseCode(long challenge, String response)
@@ -227,8 +234,8 @@ public class PasscodeGenerator {
      * determined by the interval period and the number of adjacent intervals
      * checked.
      *
-     * @param timeoutCode The timeout code
-     * @param pastIntervals The number of past intervals to check
+     * @param timeoutCode     The timeout code
+     * @param pastIntervals   The number of past intervals to check
      * @param futureIntervals The number of future intervals to check
      * @return True if the timeout code is valid
      */

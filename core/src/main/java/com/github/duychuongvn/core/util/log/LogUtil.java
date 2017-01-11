@@ -25,11 +25,14 @@ public class LogUtil {
 		return stackTraceElement.getClassName();
 	}
 
-	private static Logger getLogger() {
+	public static Logger getLogger() {
 		return LoggerFactory.getLogger(getCallingClassName());
 
 	}
 
+	public static boolean isDebugEnabled() {
+		return getLogger().isDebugEnabled();
+	}
 	public static void info(String message) {
 		getLogger().info(message);
 	}
